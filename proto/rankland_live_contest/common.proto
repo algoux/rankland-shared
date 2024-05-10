@@ -1,0 +1,107 @@
+syntax = "proto3";
+package rankland_live_contest_common;
+
+enum Result {
+  // Pending
+  PD = 0;
+
+  // Judging
+  JG = 1;
+
+  // Cancelled
+  CNL = 2;
+
+  // Frozen
+  FZ = 3;
+
+  // Unknown Error
+  UKE = 4;
+
+  // Accepted
+  AC = 5;
+
+  // First Blood (First to Solve)
+  FB = 6;
+
+  // Rejected
+  RJ = 7;
+
+  // Wrong Answer
+  WA = 8;
+
+  // Presentation Error
+  PE = 9;
+
+  // Time Limit Exceeded
+  TLE = 10;
+
+  // Memory Limit Exceeded
+  MLE = 11;
+
+  // Output Limit Exceeded
+  OLE = 12;
+
+  // Runtime Error
+  RTE = 13;
+
+  // No Output
+  NOUT = 14;
+
+  // Compile Error
+  CE = 15;
+}
+
+enum TimeUnit {
+  // Second
+  S = 0;
+
+  // Millisecond
+  MS = 1;
+
+  // Microsecond
+  US = 2;
+
+  // Nanosecond
+  NS = 3;
+}
+
+message TimeDuration {
+  int64 value = 1;
+  TimeUnit unit = 2;
+}
+
+enum EventType {
+  NEW_SOLUTION = 0;
+  SOLUTION_ON_PROGRESS = 1;
+  SOLUTION_ON_RESULT_SETTLE = 2;
+  SOLUTION_ON_RESULT_CHANGE = 3;
+  CONTEST_CONFIG_CHANGE = 4;
+}
+
+message NewSolutionEvent {
+  uint32 solution_id = 1;
+  string user_id = 2;
+  string problem_alias = 3;
+  TimeDuration time = 4; // duration (related to contest start time) in specified unit
+}
+
+message SolutionOnProgressEvent {
+  uint32 solution_id = 1;
+  uint32 percentage_progress = 2;
+}
+
+message SolutionOnResultSettleEvent {
+  uint32 solution_id = 1;
+  rankland_live_contest_common.Result result = 2;
+  TimeDuration time = 3; // duration (related to contest start time) in specified unit
+}
+
+message SolutionOnResultChangeEvent {
+  uint32 solution_id = 1;
+  rankland_live_contest_common.Result previous_result = 2;
+  rankland_live_contest_common.Result result = 3;
+  TimeDuration time = 4; // duration (related to contest start time) in specified unit
+}
+
+message ContestConfigChangeEvent {
+}

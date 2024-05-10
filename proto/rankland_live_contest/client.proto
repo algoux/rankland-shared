@@ -1,0 +1,16 @@
+syntax = "proto3";
+package rankland_live_contest_client;
+
+import "common.proto";
+
+message ClientEvent {
+  uint32 event_id = 1;
+  rankland_live_contest_common.EventType type = 2;
+  oneof data {
+    rankland_live_contest_common.NewSolutionEvent new_solution_data = 3;
+    rankland_live_contest_common.SolutionOnProgressEvent solution_on_progress_data = 4;
+    rankland_live_contest_common.SolutionOnResultSettleEvent solution_on_result_settle_data = 5;
+    rankland_live_contest_common.SolutionOnResultChangeEvent solution_on_result_change_data = 6;
+    rankland_live_contest_common.ContestConfigChangeEvent contest_config_change_data = 7;
+  }
+}
