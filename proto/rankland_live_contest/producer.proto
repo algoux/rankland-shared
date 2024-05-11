@@ -14,3 +14,7 @@ message ProducerEvent {
     rankland_live_contest_common.ContestConfigChangeEvent contest_config_change_data = 7;
   }
 }
+
+message BatchProducerEvent {
+  repeated ProducerEvent events = 1;
+}

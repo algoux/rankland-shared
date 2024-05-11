@@ -14,3 +14,7 @@ message ClientEvent {
     rankland_live_contest_common.ContestConfigChangeEvent contest_config_change_data = 7;
   }
 }
+
+message BatchClientEvent {
+  repeated ClientEvent events = 1;
+}
