@@ -18,3 +18,16 @@ message ClientEvent {
 message BatchClientEvent {
   repeated ClientEvent events = 1;
 }
+
+message GetContestEventsResponse {
+  string uk = 1;
+  optional uint32 from_event_id = 2;
+  optional uint32 to_event_id = 3;
+  uint32 checkpoint_event_id = 4;
+  uint32 latest_event_id = 5;
+  uint32 stream_revision = 6;
+  bool has_more = 7;
+  bool reset_required = 8;
+  string reset_reason = 9;
+  repeated ClientEvent events = 10;
+}
