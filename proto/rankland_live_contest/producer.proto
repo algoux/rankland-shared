@@ -17,4 +17,5 @@ message ProducerEvent {
 
 message BatchProducerEvent {
   repeated ProducerEvent events = 1;
+  uint32 stream_revision = 2;
 }
