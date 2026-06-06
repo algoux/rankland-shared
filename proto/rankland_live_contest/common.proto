@@ -11,8 +11,10 @@ enum Result {
   // Cancelled
   CNL = 2;
 
-  // Frozen
-  FZ = 3;
+  // Frozen. Deprecated for event solution results:
+  // FZ is a computed display property, not a raw judge result.
+  // Use it only when the raw results cannot be retrieved from the data source during frozen.
+  FZ = 3 [deprecated = true];
 
   // Unknown Error
   UKE = 4;
@@ -20,8 +22,9 @@ enum Result {
   // Accepted
   AC = 5;
 
-  // First Blood (First to Solve)
-  FB = 6;
+  // First Blood (First to Solve). Deprecated for event solution results:
+  // FB is a computed ranklist property, not a raw judge result.
+  FB = 6 [deprecated = true];
 
   // Rejected
   RJ = 7;
