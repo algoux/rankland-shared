@@ -1,6 +1,8 @@
 syntax = "proto3";
 package rankland_live_contest_common;
 
+import "google/protobuf/struct.proto";
+
 enum Result {
   // Pending
   PD = 0;
@@ -91,6 +93,7 @@ message NewSolutionEvent {
 message SolutionOnProgressEvent {
   uint32 solution_id = 1;
   uint32 percentage_progress = 2;
+  TimeDuration time = 3; // duration (related to contest start time) in specified unit
 }
 
 message SolutionOnResultSettleEvent {
@@ -106,5 +109,38 @@ message SolutionOnResultChangeEvent {
   TimeDuration time = 4; // duration (related to contest start time) in specified unit
 }
 
+message ContestConfigPatch {
+  // Present means replace the whole top-level name field.
+  optional string name = 1;
+
+  // SRK Contest JSON object. Present means replace the whole contest field;
+  // nested fields are not deep-merged.
+  google.protobuf.Struct contest = 2;
+
+  // SRK Problem[] JSON array. Present, even empty, means replace the whole problems field.
+  google.protobuf.ListValue problems = 3;
+
+  // Public SRK User[] JSON array only. Must not include banned or broadcasterToken.
+  google.protobuf.ListValue users = 4;
+
+  // SRK Marker[] JSON array. Present means replace the whole markers field.
+  google.protobuf.ListValue markers = 5;
+
+  // SRK RankSeries[] JSON array. Present means replace the whole series field.
+  google.protobuf.ListValue series = 6;
+
+  // SRK Sorter JSON object, or null to clear sorter in future web logic.
+  google.protobuf.Value sorter = 7;
+
+  // string[] JSON array, or null to clear contributors in future web logic.
+  google.protobuf.Value contributors = 8;
+}
+
 message ContestConfigChangeEvent {
+  // Top-level fields from ContestConfigPatch that changed.
+  repeated string changed_fields = 1;
+  // Top-level contest config patch. Present fields replace whole top-level fields;
+  // this message does not define deep merge semantics.
+  ContestConfigPatch config = 2;
+  TimeDuration time = 3; // duration (related to contest start time) in specified unit
 }
